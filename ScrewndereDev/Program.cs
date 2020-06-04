@@ -7,6 +7,9 @@ namespace ScrewndereDev
     {
         private const string DISCORD_CLIENT_ID = "560185502691491841"; // the magic value that was totally randomly generated...
         private const string PRESENCE_STATUS = "Awaiting Verification"; // oh and I totally got this by bruteforcing too...
+        private const string PRESENCE_DETAILS = "Senpai... will... be... mine...";
+        private const string PRESENCE_LKEY = "boxart";
+        private const string PRESENCE_LDESC = "This might be the game's box art one day!";
 
         // A little wrapper around Console.WriteLine so I wouldn't need to type Console..... each time.
         private static void Writeline(string line)
@@ -17,7 +20,7 @@ namespace ScrewndereDev
         private static void Main()
         {
             // If you see this text, that means your .NET Framework installation is not screwed up...
-            Writeline("ScrewndereDev V1.0 - Now with 0% Spaghetti code!");
+            Writeline("ScrewndereDev V1.1 - Now with stolen boxart!");
             Writeline("Initializing...");
 
             // Initialize a new RPC Client.
@@ -36,7 +39,18 @@ namespace ScrewndereDev
             Writeline("Initialize() result: " + (discord.Initialize() ? "OK! :)" : "Error! :("));
 
             // Bypass the check
-            discord.SetPresence(new RichPresence() { State = PRESENCE_STATUS });
+            discord.SetPresence
+            (new RichPresence()
+                {
+                    State = PRESENCE_STATUS,
+                    Details = PRESENCE_DETAILS,
+                    Assets = new Assets()
+                    {
+                        LargeImageKey = PRESENCE_LKEY,
+                        LargeImageText = PRESENCE_LDESC
+                    }
+                }
+            );
 
             // And then we loop forever processing Discord's requests.
             while (true) discord.Invoke();
